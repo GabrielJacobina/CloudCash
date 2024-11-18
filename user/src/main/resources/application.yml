@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: user
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: root
+      password: password
+      database: cloud_cash
+      authentication-database: admin
+
+server:
+  servlet:
+    context-path: /user
+  port: 8080

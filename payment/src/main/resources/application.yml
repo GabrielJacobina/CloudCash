@@ -1,1 +1,12 @@
-spring.application.name=payment
+spring:
+  application:
+    name: payment
+
+server:
+  servlet:
+    context-path: /payment
+  port: 8081
+
+
+api:
+  user: ${USER_URL}/user

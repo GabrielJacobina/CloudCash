@@ -1,26 +1,25 @@
 package com.cash.user.model;
 
 import com.cash.user.enums.UserTypeEnum;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Builder
-@ToString
-@AllArgsConstructor
 @Getter
 @Setter
-@Document
+@Entity
+@Table(name = "TAB_USER")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
-    private String id;
-    @Field("CPF/CNPJ")
-    @Indexed(unique = true)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(unique = true, nullable = false, name = "CPF_CNPJ")
     private String CPFCNPJ;
     private String name;
+    @Embedded
     private Contact contact;
     private UserTypeEnum userTypeEnum;
     private double balance;

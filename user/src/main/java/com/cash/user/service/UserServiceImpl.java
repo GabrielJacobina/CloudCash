@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public void createUser(UserDTO userDTO) {
         User user = User.builder()
                 .name(userDTO.name())
-                .CPFCNPJ(userDTO.CPFCNPJ())
+                .cpfCnpj(userDTO.cpfCnpj())
                 .contact(userDTO.contact())
                 .userTypeEnum(userDTO.userType())
                 .balance(userDTO.balance())

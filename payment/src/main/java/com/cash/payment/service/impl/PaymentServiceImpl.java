@@ -2,18 +2,24 @@ package com.cash.payment.service.impl;
 
 import com.cash.payment.dto.TransferPayment;
 import com.cash.payment.dto.User;
+import com.cash.payment.model.Transaction;
+import com.cash.payment.repository.TransactionRepository;
 import com.cash.payment.service.PaymentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
     private final ObjectMapper mapper = new ObjectMapper();
+    private final TransactionRepository repository;
 
     @Override
     public void makePayment(String message) throws IOException {
@@ -24,9 +30,11 @@ public class PaymentServiceImpl implements PaymentService {
             creditValue(transferPayment.getValue(), transferPayment.getPayee());
             mapper.writeValue(stringWriter, transferPayment);
             System.out.println("Payment made: " + stringWriter);
+            saveTransaction(transferPayment, true);
         } else {
             mapper.writeValue(stringWriter, transferPayment);
             System.out.println("Payment failed: " + stringWriter);
+            saveTransaction(transferPayment, false);
         }
     }
 
@@ -34,13 +42,22 @@ public class PaymentServiceImpl implements PaymentService {
         return mapper.readValue(message, TransferPayment.class);
     }
 
-    User debitValue(double value, User user) {
+    void debitValue(double value, User user) {
         user.setBalance(user.getBalance() - value);
-        return user;
     }
 
-    User creditValue(double value, User user) {
+    void creditValue(double value, User user) {
         user.setBalance(user.getBalance() + value);
-        return user;
+    }
+
+    Transaction saveTransaction(TransferPayment transferPayment, boolean completed) {
+        Transaction transaction = Transaction.builder()
+                .payer(transferPayment.getPayer())
+                .payee(transferPayment.getPayee())
+                .amount(transferPayment.getValue())
+                .completed(completed)
+                .date(LocalDateTime.now())
+                .build();
+        return repository.save(transaction);
     }
 }

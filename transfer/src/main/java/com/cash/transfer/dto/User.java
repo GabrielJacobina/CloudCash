@@ -16,6 +16,6 @@ public class User implements Serializable {
 
     private Long userId;
     private String name;
-    private String CPFCNPJ;
+    private String cpfCnpj;
     private double balance;
 }

@@ -4,7 +4,7 @@ import com.cash.user.enums.UserTypeEnum;
 import com.cash.user.model.Contact;
 
 public record UserDTO(String name,
-                      String CPFCNPJ,
+                      String cpfCnpj,
                       Contact contact,
                       UserTypeEnum userType,
                       double balance) {

@@ -13,6 +13,14 @@ spring:
       missing-topics-fatal: false
     admin:
       auto-create: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: root
+      password: password
+      database: cloud_cash
+      authentication-database: admin
 
 topics:
   payment: payment-topic

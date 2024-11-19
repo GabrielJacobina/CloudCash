@@ -3,7 +3,7 @@ package com.cash.transfer.service.impl;
 import com.cash.transfer.dto.Transfer;
 import com.cash.transfer.dto.TransferPayment;
 import com.cash.transfer.dto.User;
-import com.cash.transfer.producer.KafkaProducerService;
+import com.cash.transfer.producer.KafkaProducer;
 import com.cash.transfer.service.BalanceService;
 import com.cash.transfer.service.TransferService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,7 @@ import java.io.StringWriter;
 public class TransferServiceImpl implements TransferService {
 
     private final BalanceService balanceService;
-    private final KafkaProducerService kafkaProducerService;
+    private final KafkaProducer kafkaProducer;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -32,7 +32,7 @@ public class TransferServiceImpl implements TransferService {
     private void sendPayment(TransferPayment transferPayment) throws IOException {
         StringWriter stringWriter = new StringWriter();
         objectMapper.writeValue(stringWriter, transferPayment);
-        kafkaProducerService.sendMessage(stringWriter.toString());
+        kafkaProducer.sendMessage(stringWriter.toString());
     }
 
 

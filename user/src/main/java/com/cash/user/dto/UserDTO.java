@@ -1,4 +1,4 @@
-package com.cash.user.DTO;
+package com.cash.user.dto;
 
 import com.cash.user.enums.UserTypeEnum;
 import com.cash.user.model.Contact;

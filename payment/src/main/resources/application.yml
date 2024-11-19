@@ -24,6 +24,7 @@ spring:
 
 topics:
   payment: payment-topic
+  balance: balance-topic
 
 server:
   servlet:

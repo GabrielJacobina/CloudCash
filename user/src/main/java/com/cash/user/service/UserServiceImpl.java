@@ -1,7 +1,7 @@
 package com.cash.user.service;
 
-import com.cash.user.DTO.UserBalanceDTO;
-import com.cash.user.DTO.UserDTO;
+import com.cash.user.dto.UserBalanceDTO;
+import com.cash.user.dto.UserDTO;
 import com.cash.user.model.User;
 import com.cash.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

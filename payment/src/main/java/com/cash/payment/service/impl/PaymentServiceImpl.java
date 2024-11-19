@@ -1,8 +1,10 @@
 package com.cash.payment.service.impl;
 
+import com.cash.payment.dto.TransactionDTO;
 import com.cash.payment.dto.TransferPaymentDTO;
 import com.cash.payment.dto.UserDTO;
 import com.cash.payment.model.Transaction;
+import com.cash.payment.producer.KafkaProducer;
 import com.cash.payment.repository.TransactionRepository;
 import com.cash.payment.service.PaymentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,8 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -24,37 +26,39 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final ObjectMapper mapper = new ObjectMapper();
     private final TransactionRepository repository;
+    private final KafkaProducer kafkaProducer;
 
     @Override
     public void makePayment(String message) throws IOException {
-        StringWriter stringWriter = new StringWriter();
         TransferPaymentDTO transferPaymentDTO = converMessageInObject(message);
+
         if (transferPaymentDTO.getPayer() != null) {
             debitValue(transferPaymentDTO.getValue(), transferPaymentDTO.getPayer());
             creditValue(transferPaymentDTO.getValue(), transferPaymentDTO.getPayee());
-            mapper.writeValue(stringWriter, transferPaymentDTO);
-            logger.info("Payment made: " + stringWriter);
-            saveTransaction(transferPaymentDTO, true);
+
+            logger.info("Payment made: " + mapper.writeValueAsString(transferPaymentDTO));
+
+            Transaction transaction = saveTransaction(transferPaymentDTO, true);
+            sendTransaction(transaction);
         } else {
-            mapper.writeValue(stringWriter, transferPaymentDTO);
-            logger.error("Payment failed: " + stringWriter);
+            logger.error("Payment failed: " + mapper.writeValueAsString(transferPaymentDTO));
             saveTransaction(transferPaymentDTO, false);
         }
     }
 
-    TransferPaymentDTO converMessageInObject(String message) throws JsonProcessingException {
+    private TransferPaymentDTO converMessageInObject(String message) throws JsonProcessingException {
         return mapper.readValue(message, TransferPaymentDTO.class);
     }
 
-    void debitValue(double value, UserDTO userDTO) {
+    private void debitValue(double value, UserDTO userDTO) {
         userDTO.setBalance(userDTO.getBalance() - value);
     }
 
-    void creditValue(double value, UserDTO userDTO) {
+    private void creditValue(double value, UserDTO userDTO) {
         userDTO.setBalance(userDTO.getBalance() + value);
     }
 
-    Transaction saveTransaction(TransferPaymentDTO transferPaymentDTO, boolean completed) {
+    private Transaction saveTransaction(TransferPaymentDTO transferPaymentDTO, boolean completed) {
         Transaction transaction = Transaction.builder()
                 .payer(transferPaymentDTO.getPayer())
                 .payee(transferPaymentDTO.getPayee())
@@ -63,5 +67,14 @@ public class PaymentServiceImpl implements PaymentService {
                 .date(LocalDateTime.now())
                 .build();
         return repository.save(transaction);
+    }
+
+    private void sendTransaction(Transaction transaction) throws IOException {
+        List<UserDTO> users = List.of(transaction.getPayer(), transaction.getPayee());
+        TransactionDTO transactionDTO = TransactionDTO.builder()
+                .users(users)
+                .build();
+
+        kafkaProducer.sendMessage(mapper.writeValueAsString(transactionDTO));
     }
 }

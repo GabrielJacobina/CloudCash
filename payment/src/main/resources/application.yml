@@ -3,6 +3,9 @@ spring:
     name: payment
   kafka:
     bootstrap-servers: localhost:9093
+    producer:
+      acks: all
+      retries: 3
     consumer:
       group-id: transfer-payment-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer

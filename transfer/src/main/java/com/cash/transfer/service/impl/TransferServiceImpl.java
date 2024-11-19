@@ -1,8 +1,8 @@
 package com.cash.transfer.service.impl;
 
-import com.cash.transfer.DTO.Transfer;
-import com.cash.transfer.DTO.TransferPayment;
-import com.cash.transfer.DTO.User;
+import com.cash.transfer.dto.Transfer;
+import com.cash.transfer.dto.TransferPayment;
+import com.cash.transfer.dto.User;
 import com.cash.transfer.producer.KafkaProducerService;
 import com.cash.transfer.service.BalanceService;
 import com.cash.transfer.service.TransferService;

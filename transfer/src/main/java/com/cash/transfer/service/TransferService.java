@@ -1,6 +1,6 @@
 package com.cash.transfer.service;
 
-import com.cash.transfer.DTO.Transfer;
+import com.cash.transfer.dto.Transfer;
 
 import java.io.IOException;
 

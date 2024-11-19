@@ -1,6 +1,6 @@
 package com.cash.transfer.service;
 
-import com.cash.transfer.DTO.User;
+import com.cash.transfer.dto.User;
 
 public interface BalanceService {
 

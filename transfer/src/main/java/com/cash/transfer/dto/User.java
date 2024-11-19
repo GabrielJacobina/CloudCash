@@ -1,4 +1,4 @@
-package com.cash.transfer.DTO;
+package com.cash.transfer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,12 +11,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TransferPayment implements Serializable {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private double value;
-    private User payer;
-    private User payee;
-
-
+    private Long userId;
+    private String name;
+    private String CPFCNPJ;
+    private double balance;
 }

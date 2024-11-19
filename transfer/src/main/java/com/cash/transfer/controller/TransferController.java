@@ -1,6 +1,6 @@
 package com.cash.transfer.controller;
 
-import com.cash.transfer.DTO.Transfer;
+import com.cash.transfer.dto.Transfer;
 import com.cash.transfer.service.TransferService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.cash.payment.controller;
+package com.cash.transfer.controller;
 
-import com.cash.payment.DTO.Transfer;
-import com.cash.payment.service.TransferService;
+import com.cash.transfer.DTO.Transfer;
+import com.cash.transfer.service.TransferService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

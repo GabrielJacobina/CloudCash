@@ -1,6 +1,6 @@
-package com.cash.payment.service;
+package com.cash.transfer.service;
 
-import com.cash.payment.DTO.Transfer;
+import com.cash.transfer.DTO.Transfer;
 
 public interface TransferService {
 

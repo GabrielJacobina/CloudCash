@@ -1,6 +1,6 @@
-package com.cash.payment.client;
+package com.cash.transfer.client;
 
-import com.cash.payment.DTO.User;
+import com.cash.transfer.DTO.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

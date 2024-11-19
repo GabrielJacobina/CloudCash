@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: payment
+  kafka:
+    bootstrap-servers: kafka:9093
+    consumer:
+      group-id: my-consumer-group
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+    producer:
+      acks: all  # Garantia de confirmação de todos os brokers
+      retries: 3
+    listener:
+      missing-topics-fatal: false
+
+server:
+  servlet:
+    context-path: /payment
+  port: 8081
+
+
+api:
+  user: ${USER_URL}/user

@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: payment
+  kafka:
+    bootstrap-servers: localhost:9093
+    consumer:
+      group-id: transfer-payment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      max-poll-records: 10
+    listener:
+      missing-topics-fatal: false
+    admin:
+      auto-create: true
+
+topics:
+  payment: payment-topic
+
+server:
+  servlet:
+    context-path: /payment
+  port: 8082
+
+
+api:
+  user: ${USER_URL}/user

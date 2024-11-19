@@ -1,6 +1,6 @@
 spring:
   application:
-    name: payment
+    name: transfer
   kafka:
     bootstrap-servers: localhost:9093
     producer:
@@ -20,7 +20,7 @@ topics:
 
 server:
   servlet:
-    context-path: /payment
+    context-path: /transfer
   port: 8081
 
 

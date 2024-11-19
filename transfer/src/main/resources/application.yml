@@ -2,16 +2,21 @@ spring:
   application:
     name: payment
   kafka:
-    bootstrap-servers: kafka:9093
-    consumer:
-      group-id: my-consumer-group
-      auto-offset-reset: earliest
-      enable-auto-commit: true
+    bootstrap-servers: localhost:9093
     producer:
-      acks: all  # Garantia de confirmação de todos os brokers
+      acks: all
       retries: 3
     listener:
       missing-topics-fatal: false
+    admin:
+      auto-create: true
+    topics:
+      payment-topic:
+        partitions: 1
+        replication-factor: 1
+
+topics:
+  payment: payment-topic
 
 server:
   servlet:

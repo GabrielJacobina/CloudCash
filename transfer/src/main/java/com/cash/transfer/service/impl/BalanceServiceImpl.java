@@ -17,7 +17,7 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public User getPayerBalance(Long idUser) {
         User user = userClient.getUser(idUser);
-        if (user.balance() <= 0) {
+        if (user.getBalance() <= 0) {
             throw new CustomException("Saldo do pagador é insuficiente", HttpStatus.BAD_REQUEST);
         }
         return user;

@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("select new com.cash.user.DTO.UserBalanceDTO(u.id, u.balance) from User u where u.id = :id")
+    @Query("select new com.cash.user.DTO.UserBalanceDTO(u.id, u.name,u.CPFCNPJ, u.balance) from User u where u.id = :id")
     Optional<UserBalanceDTO> findUserDTOById(@Param("id") Long id);
 }

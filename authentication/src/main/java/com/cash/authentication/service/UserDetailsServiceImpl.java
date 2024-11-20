@@ -1,5 +1,6 @@
 package com.cash.authentication.service;
 
+import com.cash.authentication.client.UserClient;
 import com.cash.authentication.dto.UserDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,12 @@ import static org.springframework.security.core.authority.AuthorityUtils.commaSe
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final UserClient userClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDTO user = new UserDTO();
+        UserDTO user = userClient.getUserByUsername(username);
+
         if(user == null) {
             throw new UsernameNotFoundException(username);
         }

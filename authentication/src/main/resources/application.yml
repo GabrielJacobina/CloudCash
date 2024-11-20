@@ -1,3 +1,7 @@
 spring:
   application:
     name: authentication
+
+
+api:
+  user: ${USER_URL}/user

@@ -13,6 +13,8 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
+    @NotNull
+    private Long id;
     @NotNull @NotEmpty
     private String username;
     @NotNull @NotEmpty
@@ -22,6 +24,7 @@ public class UserDTO {
     private String role;
 
     public UserDTO(@NotNull UserDTO user) {
+        this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.role = user.getRole();

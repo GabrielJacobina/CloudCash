@@ -1,5 +1,6 @@
 package com.cash.user.service;
 
+import com.cash.user.dto.LoginDTO;
 import com.cash.user.dto.UserBalanceDTO;
 import com.cash.user.dto.UserDTO;
 import com.cash.user.model.User;
@@ -13,4 +14,6 @@ public interface UserService {
     void createUser(UserDTO user);
 
     UserBalanceDTO getUserById(Long id);
+
+    LoginDTO getUserByEmail(String email);
 }

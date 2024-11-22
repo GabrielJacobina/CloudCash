@@ -1,5 +1,6 @@
 package com.cash.user.controller;
 
+import com.cash.user.dto.LoginDTO;
 import com.cash.user.dto.UserBalanceDTO;
 import com.cash.user.dto.UserDTO;
 import com.cash.user.model.User;
@@ -30,5 +31,10 @@ public class UserController {
     public ResponseEntity<User> addUser(@RequestBody UserDTO user) {
         service.createUser(user);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/login/{username}")
+    public ResponseEntity<LoginDTO> getUserByEmail(@PathVariable String username) {
+        return ResponseEntity.ok().body(service.getUserByEmail(username));
     }
 }

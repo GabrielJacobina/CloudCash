@@ -14,15 +14,17 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
-    @NotNull
+    @EqualsAndHashCode.Include
     private Long id;
+
     @NotNull @NotEmpty
     private String username;
-    @NotNull @NotEmpty
+    @NotNull
     @ToString.Exclude
     private String password;
-    @NotNull @NotEmpty
-    private String role;
+    @NotNull
+    @Builder.Default
+    private String role = "USER";
 
     public UserDTO(@NotNull UserDTO user) {
         this.id = user.getId();

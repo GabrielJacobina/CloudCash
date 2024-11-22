@@ -1,7 +1,8 @@
-package com.cash.user.service;
+package com.cash.user.service.impl;
 
 import com.cash.user.dto.TransactionDTO;
 import com.cash.user.repository.UserRepository;
+import com.cash.user.service.BalanceService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

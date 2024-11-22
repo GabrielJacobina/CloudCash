@@ -19,9 +19,12 @@ public class User {
     @Column(unique = true, nullable = false, name = "CPF_CNPJ")
     private String cpfCnpj;
     private String name;
+    private String password;
     @Embedded
     private Contact contact;
     private UserTypeEnum userTypeEnum;
     private double balance;
+    @Builder.Default
+    private String role = "USER";
 
 }

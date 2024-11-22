@@ -27,10 +27,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return null;
+        return new CustomUserDetails(user);
     }
 
-    private static final class CustomUserDetails extends UserDTO implements UserDetails {
+    public static final class CustomUserDetails extends UserDTO implements UserDetails {
         public CustomUserDetails(@NotNull UserDTO userDTO) {
             super(userDTO);
         }

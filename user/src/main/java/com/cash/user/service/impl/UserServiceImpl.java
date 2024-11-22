@@ -1,9 +1,11 @@
-package com.cash.user.service;
+package com.cash.user.service.impl;
 
+import com.cash.user.dto.LoginDTO;
 import com.cash.user.dto.UserBalanceDTO;
 import com.cash.user.dto.UserDTO;
 import com.cash.user.model.User;
 import com.cash.user.repository.UserRepository;
+import com.cash.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +41,10 @@ public class UserServiceImpl implements UserService {
         Optional<UserBalanceDTO> userDTOById = userRepository.findUserDTOById(id);
         return userDTOById.isPresent() ? userDTOById.get() : null;
 
+    }
+
+    @Override
+    public LoginDTO getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email).orElse(null);
     }
 }

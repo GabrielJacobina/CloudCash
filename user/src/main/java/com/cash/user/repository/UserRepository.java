@@ -1,5 +1,6 @@
 package com.cash.user.repository;
 
+import com.cash.user.dto.LoginDTO;
 import com.cash.user.dto.UserBalanceDTO;
 import com.cash.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.balance = :balance where u.id = :id")
     void updateBalance(@Param("id") Long id, @Param("balance") Double balance);
+
+    @Query("select new com.cash.user.dto.LoginDTO(u.name, u.password) from User u where u.contact.email = :email")
+    Optional<LoginDTO> getUserByEmail(@Param("email") String email);
 }

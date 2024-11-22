@@ -1,6 +1,7 @@
 package com.cash.user.model;
 
 import com.cash.user.enums.UserTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class User {
     @Column(unique = true, nullable = false, name = "CPF_CNPJ")
     private String cpfCnpj;
     private String name;
+    @JsonIgnore
     private String password;
     @Embedded
     private Contact contact;

@@ -23,6 +23,11 @@ server:
     context-path: /transfer
   port: 8081
 
-
-api:
-  user: ${USER_URL}/user
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8084/eureka/}
+  instance:
+    preferIpAddress: true

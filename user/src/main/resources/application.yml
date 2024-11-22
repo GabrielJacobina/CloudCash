@@ -34,3 +34,12 @@ server:
   servlet:
     context-path: /user
   port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8084/eureka/}
+  instance:
+    preferIpAddress: true

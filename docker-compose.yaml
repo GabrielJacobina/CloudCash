@@ -21,7 +21,6 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
-
   mongo:
     image: mongo:latest
     container_name: mongo-db
@@ -44,6 +43,42 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  discovery-service:
+    image: gabrieljacobina/discovery-service:latest
+    container_name: discovery-service
+    build:
+      context: ./discovery
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+
+  gateway-service:
+    image: gabrieljacobina/gateway-service:latest
+    container_name: gateway-service
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+
+  payment-service:
+    image: gabrieljacobina/payment-service:latest
+    container_name: payment-service
+    build:
+      context: ./payment
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+
+  transfer-service:
+    image: gabrieljacobina/transfer-service:latest
+    container_name: transfer-service
+    build:
+      context: ./transfer
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
 
 volumes:
   mongo-data:

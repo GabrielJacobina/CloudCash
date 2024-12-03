@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -35,8 +37,10 @@ public class WebSecurityConfig {
         return (authentication, context) -> {
             HttpServletRequest request = context.getRequest();
             String remoteHost = request.getRemoteHost();
+            List<String> services = List.of("gateway", "transfer", "payment");
 
-            boolean isAuthorized = discoveryClient.getInstances("gateway").stream()
+            boolean isAuthorized = services.stream()
+                    .flatMap(serviceId -> discoveryClient.getInstances(serviceId).stream())
                     .anyMatch(instance -> instance.getHost().equals(remoteHost));
 
             return new AuthorizationDecision(isAuthorized);

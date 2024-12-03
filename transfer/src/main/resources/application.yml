@@ -2,7 +2,7 @@ spring:
   application:
     name: transfer
   kafka:
-    bootstrap-servers: localhost:9093
+    bootstrap-servers: ${KAFKA_HOST}:9093
     producer:
       acks: all
       retries: 3
@@ -28,6 +28,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8084/eureka/}
+      defaultZone: ${EUREKA_URI}
   instance:
     preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${server.port}

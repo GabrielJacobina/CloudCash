@@ -2,7 +2,7 @@ spring:
   application:
     name: payment
   kafka:
-    bootstrap-servers: localhost:9093
+    bootstrap-servers: ${KAFKA_HOST}:9093
     producer:
       acks: all
       retries: 3
@@ -18,10 +18,10 @@ spring:
       auto-create: true
   data:
     mongodb:
-      host: localhost
+      host: ${MONGO_HOST}
       port: 27017
-      username: root
-      password: password
+      username: ${MONGO_USER}
+      password: ${MONGO_PASSWORD}
       database: cloud_cash
       authentication-database: admin
 
@@ -34,15 +34,12 @@ server:
     context-path: /payment
   port: 8082
 
-
-api:
-  user: ${USER_URL}/user
-
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8084/eureka/}
+      defaultZone: ${EUREKA_URI}
   instance:
     preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${server.port}

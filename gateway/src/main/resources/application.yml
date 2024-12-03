@@ -6,11 +6,11 @@ spring:
       mvc:
         routes:
         - id: transfer-service
-          uri: lb://TRANSFER
+          uri: lb://transfer
           predicates:
             - Path=/transfer/**
         - id: user-service
-          uri: lb://USER
+          uri: lb://user
           predicates:
             - Path=/user/**
     discovery:
@@ -42,6 +42,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8084/eureka/}
+      defaultZone: ${EUREKA_URI}
   instance:
     preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${server.port}

@@ -7,6 +7,14 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:${server.port}/eureka/}
+      defaultZone: ${EUREKA_URI}
+  instance:
+    ip-address: ${spring.cloud.client.ip-address}
 server:
   port: 8084
+
+logging:
+  level:
+    com.netflix.eureka: DEBUG
+    com.netflix.discovery: DEBUG
+    org.springframework.cloud.netflix.eureka: DEBUG

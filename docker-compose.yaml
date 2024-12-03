@@ -44,41 +44,89 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  discovery-service:
+  discovery:
     image: gabrieljacobina/discovery-service:latest
-    container_name: discovery-service
+    container_name: discovery
     build:
       context: ./discovery
       dockerfile: Dockerfile
     ports:
       - "8084:8084"
+    environment:
+      - EUREKA_URI=http://discovery:8084/eureka/
 
-  gateway-service:
+  gateway:
     image: gabrieljacobina/gateway-service:latest
-    container_name: gateway-service
+    container_name: gateway
     build:
       context: ./gateway
       dockerfile: Dockerfile
     ports:
       - "8083:8083"
+    environment:
+      - EUREKA_URI=http://discovery:8084/eureka/
+      - SPRING_CLOUD_CLIENT_HOSTNAME=gateway
+    depends_on:
+      - discovery
 
-  payment-service:
+  payment:
     image: gabrieljacobina/payment-service:latest
-    container_name: payment-service
+    container_name: payment
     build:
       context: ./payment
       dockerfile: Dockerfile
     ports:
       - "8082:8082"
+    environment:
+      - EUREKA_URI=http://discovery:8084/eureka/
+      - KAFKA_HOST=kafka
+      - MONGO_HOST=mongo
+      - MONGO_PASSWORD=password
+      - MONGO_USER=root
+      - SPRING_CLOUD_CLIENT_HOSTNAME=payment
+    depends_on:
+      - discovery
+      - gateway
+      - kafka
+      - mongo
 
-  transfer-service:
+  transfer:
     image: gabrieljacobina/transfer-service:latest
-    container_name: transfer-service
+    container_name: transfer
     build:
       context: ./transfer
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
+    environment:
+      - EUREKA_URI=http://discovery:8084/eureka/
+      - KAFKA_HOST=kafka
+      - SPRING_CLOUD_CLIENT_HOSTNAME=transfer
+    depends_on:
+      - discovery
+      - gateway
+      - kafka
+
+  user:
+    image: gabrieljacobina/user-service:latest
+    container_name: user
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URI=http://discovery:8084/eureka/
+      - POSTGRE_HOST=postgre
+      - POSTGRE_PASSWORD=password
+      - POSTGRE_USER=root
+      - KAFKA_HOST=http://kafka
+      - SPRING_CLOUD_CLIENT_HOSTNAME=user
+    depends_on:
+      - discovery
+      - gateway
+      - postgre
+      - kafka
 
 volumes:
   mongo-data:

@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserBalanceDTO getUserById(Long id) {
         Optional<UserBalanceDTO> userDTOById = userRepository.findUserDTOById(id);
-        return userDTOById.isPresent() ? userDTOById.get() : null;
+        return userDTOById.orElse(null);
 
     }
 

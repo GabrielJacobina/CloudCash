@@ -15,4 +15,14 @@ public class UserCreator {
                 .balance(4525.02)
                 .build();
     }
+
+    public static User createUserSave() {
+        return User.builder()
+                .name("Fulano")
+                .cpfCnpj("123456789")
+                .contact(ContactCreator.createContact())
+                .userTypeEnum(UserTypeEnum.INDIVIDUAL)
+                .balance(4525.02)
+                .build();
+    }
 }

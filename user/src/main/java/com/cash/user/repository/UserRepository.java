@@ -23,6 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User u SET u.balance = :balance where u.id = :id")
     void updateBalance(@Param("id") Long id, @Param("balance") Double balance);
 
-    @Query("select new com.cash.user.dto.LoginDTO(u.name, u.password) from User u where u.contact.email = :email")
+    @Query("select new com.cash.user.dto.LoginDTO(u.contact.email, u.password) from User u where u.contact.email = :email")
     Optional<LoginDTO> getUserByEmail(@Param("email") String email);
 }

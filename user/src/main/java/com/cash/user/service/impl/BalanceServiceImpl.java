@@ -26,7 +26,7 @@ public class BalanceServiceImpl implements BalanceService {
         logger.info("Updated user balance: " + mapper.writeValueAsString(transaction));
     }
 
-    TransactionDTO converMessageInObject(String message) throws JsonProcessingException {
+    private TransactionDTO converMessageInObject(String message) throws JsonProcessingException {
         return mapper.readValue(message, TransactionDTO.class);
     }
 }

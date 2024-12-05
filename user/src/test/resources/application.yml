@@ -1,0 +1,16 @@
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+server:
+  servlet:
+    context-path: /user
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate:
+        SQL: DEBUG

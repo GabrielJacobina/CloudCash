@@ -9,7 +9,7 @@ public class UserCreator {
         return User.builder()
                 .id(1L)
                 .name("Fulano")
-                .cpfCnpj("123456789")
+                .cpfCnpj("213456789")
                 .contact(ContactCreator.createContact())
                 .userTypeEnum(UserTypeEnum.INDIVIDUAL)
                 .balance(4525.02)
@@ -19,7 +19,7 @@ public class UserCreator {
     public static User createUserSave() {
         return User.builder()
                 .name("Fulano")
-                .cpfCnpj("123456789")
+                .cpfCnpj("123446789")
                 .contact(ContactCreator.createContact())
                 .userTypeEnum(UserTypeEnum.INDIVIDUAL)
                 .balance(4525.02)
